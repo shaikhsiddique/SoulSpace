@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -109,22 +110,7 @@ const Navbar = () => {
           Pricing
         </motion.a>
       </li>
-      <li>
-        <motion.a
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={(e) => {
-            e.preventDefault();
-            handleCloseMenu();
-            handleScrollTo("team");
-          }}
-          href="#team"
-          className={`text-white 
-            ${activeSection === "testimonial" ? "isActive" : ""}`}
-        >
-          Team
-        </motion.a>
-      </li>
+
     </ul>
   );
   return (
@@ -154,6 +140,14 @@ const Navbar = () => {
             Contact us
           </a>
         </div>
+        <div className="hidden md:block">
+          <Link
+           to={'/logout'}
+            className="text-white bg-red-500 hover:bg-red-700 px-4 py-2 rounded mx-6"
+          >
+           Logout
+          </Link>
+        </div>
         {/* hamburgar menu */}
         <div className="block md:hidden">
           <button
@@ -167,27 +161,38 @@ const Navbar = () => {
         </div>
       </div>
       {/* mobile nav items */}
-      {isOpen && (
-        <nav className="absolute top-full left-0 w-full bg-heroBg z-20 md:hidden">
-          <ul className="flex flex-col p-4 space-y-3">
-            {navLinks.props.children}
-            {/* mobile button */}
-            <li className="py-2">
-              <a
-                href="#contact"
-                className="text-white bg-primary hover:bg-primary/90 px-4 py-2 rounded"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleCloseMenu();
-                  handleScrollTo("contact");
-                }}
-              >
-                Contact Us
-              </a>
-            </li>
-          </ul>
-        </nav>
-      )}
+    {/* mobile nav items */}
+{isOpen && (
+  <nav className="absolute top-full left-0 w-full bg-heroBg z-20 md:hidden">
+    <ul className="flex flex-col p-4 space-y-3">
+      {navLinks.props.children}
+      {/* mobile button */}
+      <li className="py-2">
+        <a
+          href="#contact"
+          className="text-white bg-primary hover:bg-primary/90 px-4 py-2 rounded"
+          onClick={(e) => {
+            e.preventDefault();
+            handleCloseMenu();
+            handleScrollTo("contact");
+          }}
+        >
+          Contact Us
+        </a>
+      </li>
+      <li className="py-2">
+        <Link
+          to="/logout"
+          onClick={handleCloseMenu}
+          className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded block text-center"
+        >
+          Logout
+        </Link>
+      </li>
+    </ul>
+  </nav>
+)}
+
     </header>
   );
 };

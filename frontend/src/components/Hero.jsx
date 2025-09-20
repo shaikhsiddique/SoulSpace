@@ -4,7 +4,8 @@ import { IoArrowForwardCircleSharp } from "react-icons/io5";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utilities/animationVarients";
 
-const Hero = () => {
+const Hero = ({user}) => {
+
   return (
     <section
       id="home"
@@ -19,6 +20,9 @@ const Hero = () => {
           viewport={{ once: false, amount: 0.7 }}
           className="md:w-1/2"
         >
+          <h1 className="text-4xl font-secondary font-bold mb-4 md:w-3/5 leading-snug">
+            Hello  {user.username}
+          </h1>
           <h1 className="text-4xl font-secondary font-bold mb-4 md:w-3/5 leading-snug">
             Your Safe Space for Mental Well-Being
           </h1>
