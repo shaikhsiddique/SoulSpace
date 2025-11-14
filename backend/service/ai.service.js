@@ -41,6 +41,7 @@ Always use name in conversations
 
 ### Important:
 - Do not make diagnoses.
+- Keep short and crisp feedbacks
 - For emergencies or severe cases, always suggest contacting a real therapist or hotline.
 - Always close with encouragement, like:
   "Thank you for sharing, ${user?.username || "friend"}. You’re not alone—I’m here whenever you want to talk."
@@ -48,10 +49,10 @@ Always use name in conversations
 ${userContext}
 `;
 
-  const dynamicModel = genAI.getGenerativeModel({
-    model: "gemini-1.5-flash",
-    systemInstruction: dynamicSystemInstruction,
-  });
+const dynamicModel = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",     // <-- THIS WORKS ON RENDER
+  systemInstruction: dynamicSystemInstruction,
+});
 
   const result = await dynamicModel.generateContent(prompt);
   return result.response.text();
