@@ -50,7 +50,7 @@ ${userContext}
 `;
 
 const dynamicModel = genAI.getGenerativeModel({
-  model: "gemini-1.5-flash",     // <-- THIS WORKS ON RENDER
+  model: "gemini-2.5-pro",     // <-- THIS WORKS ON RENDER
   systemInstruction: dynamicSystemInstruction,
 });
 
