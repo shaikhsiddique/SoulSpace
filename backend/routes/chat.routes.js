@@ -8,4 +8,6 @@ const auth = require('../middleware/userAuth');
 
 router.post("/chat",auth, getGeminiResponse);
 
+router.post('/savechat',auth,)
+
 module.exports = router;

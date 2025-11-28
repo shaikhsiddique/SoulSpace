@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect} from "react";
-import axios from "../config/axios";
+import { useState, useRef, useEffect } from "react";
+import { createSocketConnection } from "../config/socket";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoSend } from "react-icons/io5";
@@ -10,40 +10,83 @@ function Chatbot() {
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isConnected, setIsConnected] = useState(false);
   const chatContainerRef = useRef(null);
+  const socketRef = useRef(null);
   const token = localStorage.getItem("Auth-Token");
 
+  // Initialize Socket.IO connection when component mounts
+  useEffect(() => {
+    if (!token) {
+      toast.error("Please login to use the chatbot.");
+      return;
+    }
 
-  const handleSendMessage = async () => {
+    // Create socket connection
+    const socket = createSocketConnection(token);
+    socketRef.current = socket;
+
+    // Handle connection events
+    socket.on("connect", () => {
+      console.log("Socket connected");
+      setIsConnected(true);
+      toast.success("Connected to chatbot");
+    });
+
+    socket.on("disconnect", () => {
+      console.log("Socket disconnected");
+      setIsConnected(false);
+      toast.warning("Disconnected from chatbot");
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("Connection error:", error);
+      setIsConnected(false);
+      toast.error(error.message || "Failed to connect to chatbot");
+    });
+
+    // Handle AI message response
+    socket.on("ai_message", (data) => {
+      const botResponse = { text: data.message, sender: "bot" };
+      setChat((prevChat) => [...prevChat, botResponse]);
+      setLoading(false);
+    });
+
+    // Handle errors
+    socket.on("error", (error) => {
+      console.error("Socket error:", error);
+      toast.error(error.message || "An error occurred");
+      setLoading(false);
+    });
+
+    // Cleanup: disconnect socket when component unmounts
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.disconnect();
+        socketRef.current = null;
+      }
+    };
+  }, [token]);
+
+  const handleSendMessage = () => {
     if (!message.trim()) {
       toast.error("Please enter a message.");
       return;
     }
 
+    if (!isConnected || !socketRef.current) {
+      toast.error("Not connected to chatbot. Please wait...");
+      return;
+    }
+
     const userMessage = { text: message, sender: "user" };
     setChat((prevChat) => [...prevChat, userMessage]);
+    const messageToSend = message;
     setMessage("");
     setLoading(true);
 
-    try {
-      // ✅ Use await instead of mixing with .then()
-      const res = await axios.post(
-        "/api/chat",
-        { message }, // request body
-        {
-          headers: { Authorization: `Bearer ${token}` }, // config
-        }
-      );
-      
-
-      const botResponse = { text: res.data.response, sender: "bot" };
-      setChat((prevChat) => [...prevChat, botResponse]);
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong.");
-    } finally {
-      setLoading(false);
-    }
+    // Send message via socket
+    socketRef.current.emit("user_message", { message: messageToSend });
   };
 
   useEffect(() => {
@@ -61,14 +104,26 @@ function Chatbot() {
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
       >
-        <motion.h1
-          className="text-3xl font-bold text-[#3B3B98] mb-4 text-center"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          SoulSpace Chatbot
-        </motion.h1>
+        <div className="flex items-center justify-between mb-4">
+          <motion.h1
+            className="text-3xl font-bold text-[#3B3B98] text-center flex-1"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            SoulSpace Chatbot
+          </motion.h1>
+          <div className="flex items-center gap-2">
+            <div
+              className={`w-3 h-3 rounded-full ${
+                isConnected ? "bg-green-500" : "bg-red-500"
+              }`}
+            ></div>
+            <span className="text-sm text-gray-600">
+              {isConnected ? "Connected" : "Disconnected"}
+            </span>
+          </div>
+        </div>
 
         {/* Chat Container */}
         <div
