@@ -1,5 +1,5 @@
 const Chat = require("../models/Chat.model");
-const UserIssue = require("../models/userIssue.model");
+const UserIssue = require("../models/UserIssue.model");
 const userService = require('../service/user.service');
 const aiService = require('../service/ai.service');
 
