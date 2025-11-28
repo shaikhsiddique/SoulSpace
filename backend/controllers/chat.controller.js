@@ -1,7 +1,7 @@
 // controllers/chatController.js
 
 const Chat = require("../models/Chat.model"); // CommonJS import, no .js
-const UserIssue = require("../models/userIssue.model");
+const UserIssue = require("../models/UserIssue.model");
 const userService = require('../service/user.service');
 const aiService = require('../service/ai.service');
 const analysisService = require('../service/analysis.service');
