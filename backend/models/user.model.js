@@ -1,87 +1,142 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
-const userSchema = new mongoose.Schema({
+// -------- TEST SUB-SCHEMA --------
+const testSchema = new mongoose.Schema(
+  {
+    sentiment: {
+      type: String,
+      required: true,
+    },
+    emotion: {
+      type: String,
+      required: true,
+    },
+    risk_level: {
+      type: String,
+      required: true,
+      enum: ['low', 'medium', 'high', 'emergency'],
+    },
+    topics: {
+      type: [String],
+      required: true,
+      default: [],
+    },
+    summary: {
+      type: String,
+      required: true,
+    },
+    date: {
+      type: Date,
+      default: Date.now, // timestamp
+    },
+    // Store original assessment data for reference
+    selectedDomain: {
+      type: String,
+      required: false,
+    },
+  },
+  { _id: true, timestamps: false }
+);
+
+// -------- JOURNAL SUB-SCHEMA --------
+const journalSchema = new mongoose.Schema(
+  {
+    date: {
+      type: Date,
+      default: Date.now,
+    },
+    content: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  { _id: true, timestamps: false }
+);
+
+// -------- USER SCHEMA --------
+const userSchema = new mongoose.Schema(
+  {
     username: {
-        type: String,
-        required: [true, "Username is required."]
+      type: String,
+      required: [true, 'Username is required.'],
     },
     email: {
-        type: String,
-        unique: true,
-        required: [true, "Email is required."]
+      type: String,
+      unique: true,
+      required: [true, 'Email is required.'],
     },
     phone: {
-        type: Number,
-        unique: true,
-        required: [true, "Phone number is required."]
+      type: Number,
+      unique: true,
+      required: [true, 'Phone number is required.'],
     },
     password: {
-        type: String,
-        required: [true, "Password is required."]
+      type: String,
+      required: [true, 'Password is required.'],
     },
-   
-}, { timestamps: true });
+    age: {
+      type: Number,
+      required: [true, 'Age is required.'],
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other'],
+      required: [true, 'Gender is required.'],
+    },
 
-userSchema.post('save', function(error, doc, next) {
-    if (error.name === 'MongoServerError' && error.code === 11000) {
-        if (error.keyPattern.email) {
-            next(new Error('Email must be unique. The provided email is already in use.'));
-        } else if (error.keyPattern.phone) {
-            next(new Error('Phone number must be unique. The provided phone number is already in use.'));
-        } else {
-            next(new Error('A unique constraint violation occurred.'));
-        }
+    // ---- TEST ARRAY (multiple tests) ----
+    tests: {
+      type: [testSchema],
+      default: [],
+    },
+
+    // ---- JOURNAL ENTRIES (optional) ----
+    journals: {
+      type: [journalSchema],
+      default: [],
+    },
+  },
+  { timestamps: true }
+);
+
+// -------- UNIQUE ERROR HANDLING --------
+userSchema.post('save', function (error, doc, next) {
+  if (error.name === 'MongoServerError' && error.code === 11000) {
+    if (error.keyPattern.email) {
+      next(new Error('Email must be unique. The provided email is already in use.'));
+    } else if (error.keyPattern.phone) {
+      next(new Error('Phone number must be unique. The provided phone number is already in use.'));
     } else {
-        next(error);
+      next(new Error('A unique constraint violation occurred.'));
     }
+  } else {
+    next(error);
+  }
 });
 
+// -------- JOI VALIDATION --------
 const validateUserModel = (data) => {
-    const schema = Joi.object({
-        username: Joi.string()
-            .min(3)
-            .max(50)
-            .required()
-            .messages({
-                "string.base": "Username must be a valid string.",
-                "string.empty": "Username cannot be empty. Please enter a username.",
-                "string.min": "Username must be at least 3 characters long.",
-                "string.max": "Username cannot exceed 50 characters.",
-                "any.required": "Username is required."
-            }),
-        email: Joi.string()
-            .email()
-            .required()
-            .messages({
-                "string.email": "Please provide a valid email address.",
-                "string.empty": "Email cannot be empty. Please enter your email.",
-                "any.required": "Email is required."
-            }),
-        phone: Joi.number()
-            .integer()
-            .min(1000000000)
-            .max(9999999999)
-            .required()
-            .messages({
-                "number.base": "Phone number must be a valid number.",
-                "number.integer": "Phone number must be an integer.",
-                "number.min": "Phone number must be a 10-digit number.",
-                "number.max": "Phone number must be a 10-digit number.",
-                "any.required": "Phone number is required."
-            }),
-        password: Joi.string()
-            .min(6)
-            .required()
-            .messages({
-                "string.base": "Password must be a valid string.",
-                "string.empty": "Password cannot be empty. Please enter a password.",
-                "string.min": "Password must be at least 6 characters long.",
-                "any.required": "Password is required."
-            })
-    });
+  const schema = Joi.object({
+    username: Joi.string().min(3).max(50).required(),
+    email: Joi.string().email().required(),
+    phone: Joi.number().integer().min(1000000000).max(9999999999).required(),
+    password: Joi.string().min(6).required(),
 
-    return schema.validate(data, { abortEarly: false });
+    // Added age & gender validation
+    age: Joi.number().min(1).max(120).required().messages({
+      "number.base": "Age must be a number.",
+      "any.required": "Age is required.",
+    }),
+
+    gender: Joi.string().valid('male', 'female', 'other').required().messages({
+      "any.only": "Gender must be male, female, or other.",
+      "any.required": "Gender is required.",
+    }),
+  });
+
+  return schema.validate(data, { abortEarly: false });
 };
 
 const userModel = mongoose.model('User', userSchema);

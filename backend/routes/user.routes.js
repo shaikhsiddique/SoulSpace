@@ -24,11 +24,32 @@ router.get('/profile',auth, async (req, res) => {
 router.get('/all',auth,async (req,res)=>{
     userController.getAllUserController(req,res);
 })
+
+// Assessment routes (must be before /:id route to avoid conflicts)
+router.post('/assessment', auth, async (req, res) => {
+    userController.createAssessmentController(req, res);
+});
+
+router.get('/assessments', auth, async (req, res) => {
+    userController.getUserAssessmentsController(req, res);
+});
+
+// Journal routes (also before /:id route)
+router.post('/journals', auth, async (req, res) => {
+    userController.createJournalEntryController(req, res);
+});
+
+router.get('/journals', auth, async (req, res) => {
+    userController.getUserJournalsController(req, res);
+});
+
+router.delete('/journals/:journalId', auth, async (req, res) => {
+    userController.deleteJournalEntryController(req, res);
+});
+
 router.get("/:id",auth,async (req,res)=>{
     userController.getUserByIdController(req,res);
 })
-
-
 
 router.post('/send-otp', async (req, res) => {
     userController.sendOtpController(req, res);

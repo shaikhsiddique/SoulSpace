@@ -5,42 +5,75 @@ const { createToken, verifyToken } = require('../utils/jwt');
 const userService = require('../service/user.service');
 const  redisClient  = require('../service/redis.service');
 
-const signupController = async (req, res) => {
-
-    try {
-       
-        const { error } = validateUserModel(req.body);
-       
-        if (error) return res.status(400).json({ error: error.details[0].message });
-
-        const { username, email, phone, password } = req.body;
-  
-        const existingUser = await userService.findUserByEmail(email);
-
-        if(existingUser){
-           return res.status(500).json({ error: 'User with this data exists' });
-        }
-
-        const hashedPassword = await hashPassword(password);
-
-        const user = await userService.createUserService({ username, email, phone, password:hashedPassword  });
-
-        const token = await createToken({ id: user._id, email: user.email });
-
-        res.cookie("authToken", token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "strict",
-            maxAge: 3 * 60 * 60 * 1000,
-          });
-          
-        res.status(201).json({ message: 'User created successfully', user: { ...user.toObject(), password: undefined }, token });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'An error occurred during registration', details: err.message });
-    }
+// Domain mapping for emotions
+const domainToEmotion = {
+    'stress': 'stress',
+    'anxiety': 'anxiety',
+    'depression': 'sadness',
+    'sleep': 'restlessness',
+    'selfEsteem': 'insecurity',
+    'anger': 'anger',
+    'loneliness': 'loneliness'
 };
 
+// Domain names for topics
+const domainNames = {
+    'stress': 'stress',
+    'anxiety': 'anxiety',
+    'depression': 'depression',
+    'sleep': 'sleep issues',
+    'selfEsteem': 'self-esteem',
+    'anger': 'anger',
+    'loneliness': 'loneliness'
+};
+
+const signupController = async (req, res) => {
+    try {
+      const { error } = validateUserModel(req.body);
+      if (error) return res.status(400).json({ error: error.details[0].message });
+  
+      const { username, email, phone, password, age, gender } = req.body;
+  
+      const existingUser = await userService.findUserByEmail(email);
+      if (existingUser) {
+        return res.status(500).json({ error: 'User with this email already exists' });
+      }
+  
+      const hashedPassword = await hashPassword(password);
+  
+      const user = await userService.createUserService({
+        username,
+        email,
+        phone,
+        password: hashedPassword,
+        age,
+        gender
+      });
+  
+      const token = await createToken({ id: user._id, email: user.email });
+  
+      res.cookie("authToken", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "strict",
+        maxAge: 3 * 60 * 60 * 1000,
+      });
+  
+      res.status(201).json({
+        message: 'User created successfully',
+        user: { ...user.toObject(), password: undefined },
+        token
+      });
+  
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({
+        error: 'An error occurred during registration',
+        details: err.message
+      });
+    }
+  };
+  
 const loginController = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -228,6 +261,237 @@ const resetPasswordController = async (req, res) => {
     }
 };
 
-module.exports = {loginController,signupController,profileController,logoutController,getAllUserController,getUserByIdController,
- sendOtpController, resetPasswordController
+// Helper function to process assessment data and convert to testSchema format
+const processAssessmentData = (assessmentData) => {
+    const { domainAnswers, selectedDomain, severityAnswers } = assessmentData;
+
+    // Calculate average domain score
+    const avgDomainScore = domainAnswers && domainAnswers.length > 0
+        ? domainAnswers.reduce((sum, val) => sum + (val || 0), 0) / domainAnswers.length
+        : 0;
+
+    // Calculate average severity score
+    const avgSeverityScore = severityAnswers && severityAnswers.length > 0
+        ? severityAnswers.reduce((sum, val) => sum + (val || 0), 0) / severityAnswers.length
+        : 0;
+
+    // Determine sentiment based on scores
+    let sentiment = 'neutral';
+    if (avgDomainScore >= 4 || avgSeverityScore >= 4) {
+        sentiment = 'negative';
+    } else if (avgDomainScore <= 2 && avgSeverityScore <= 2) {
+        sentiment = 'positive';
+    }
+
+    // Map selected domain to emotion
+    const emotion = domainToEmotion[selectedDomain] || selectedDomain || 'neutral';
+
+    // Determine risk level based on severity scores
+    let risk_level = 'low';
+    if (avgSeverityScore >= 4.5) {
+        risk_level = 'emergency';
+    } else if (avgSeverityScore >= 3.5) {
+        risk_level = 'high';
+    } else if (avgSeverityScore >= 2.5) {
+        risk_level = 'medium';
+    }
+
+    // Extract topics from domains with high scores (>= 3)
+    const topics = [];
+    const domainKeys = ['stress', 'anxiety', 'depression', 'sleep', 'selfEsteem', 'anger', 'loneliness'];
+    if (domainAnswers && domainAnswers.length >= 7) {
+        domainKeys.forEach((domain, index) => {
+            if (domainAnswers[index] >= 3) {
+                topics.push(domainNames[domain] || domain);
+            }
+        });
+    }
+    
+    // Always include the selected domain as a topic
+    if (selectedDomain && !topics.includes(domainNames[selectedDomain])) {
+        topics.unshift(domainNames[selectedDomain] || selectedDomain);
+    }
+
+    // Generate summary
+    const summary = `Assessment focused on ${domainNames[selectedDomain] || selectedDomain || 'mental wellness'} with ${risk_level} risk level. Average domain score: ${avgDomainScore.toFixed(1)}/5.`;
+
+    return {
+        sentiment,
+        emotion,
+        risk_level,
+        topics: topics.length > 0 ? topics : [domainNames[selectedDomain] || selectedDomain || 'general wellness'],
+        summary,
+        selectedDomain: selectedDomain || null,
+        date: new Date()
+    };
+};
+
+// Create assessment controller
+const createAssessmentController = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user || !user._id) {
+            return res.status(401).json({ error: 'Unauthorized. Please login.' });
+        }
+
+        const { domainAnswers, selectedDomain, severityAnswers } = req.body;
+
+        // Validate required fields
+        if (!domainAnswers || !Array.isArray(domainAnswers)) {
+            return res.status(400).json({ error: 'Domain answers are required and must be an array' });
+        }
+
+        if (!selectedDomain) {
+            return res.status(400).json({ error: 'Selected domain is required' });
+        }
+
+        if (!severityAnswers || !Array.isArray(severityAnswers)) {
+            return res.status(400).json({ error: 'Severity answers are required and must be an array' });
+        }
+
+        // Process assessment data
+        const assessmentData = processAssessmentData({
+            domainAnswers,
+            selectedDomain,
+            severityAnswers
+        });
+
+        // Add assessment to user
+        const newAssessment = await userService.addAssessmentToUser(user._id, assessmentData);
+
+        res.status(201).json({
+            message: 'Assessment created successfully',
+            assessment: newAssessment
+        });
+
+    } catch (error) {
+        console.error('Error creating assessment:', error);
+        res.status(500).json({
+            error: 'Failed to create assessment',
+            details: error.message
+        });
+    }
+};
+
+// Get all assessments for a user
+const getUserAssessmentsController = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user || !user._id) {
+            return res.status(401).json({ error: 'Unauthorized. Please login.' });
+        }
+
+        const assessments = await userService.getUserAssessments(user._id);
+
+        res.status(200).json({
+            message: 'Assessments fetched successfully',
+            assessments: assessments,
+            count: assessments.length
+        });
+
+    } catch (error) {
+        console.error('Error fetching assessments:', error);
+        res.status(500).json({
+            error: 'Failed to fetch assessments',
+            details: error.message
+        });
+    }
+};
+
+// -------- JOURNAL CONTROLLERS --------
+
+// Create/Add a journal entry
+const createJournalEntryController = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user || !user._id) {
+            return res.status(401).json({ error: 'Unauthorized. Please login.' });
+        }
+
+        const { content } = req.body;
+        if (!content || typeof content !== 'string') {
+            return res.status(400).json({ error: 'Journal content is required' });
+        }
+
+        const journalEntry = await userService.addJournalEntry(user._id, content);
+
+        res.status(201).json({
+            message: 'Journal entry created successfully',
+            journal: journalEntry
+        });
+    } catch (error) {
+        console.error('Error creating journal entry:', error);
+        res.status(500).json({
+            error: 'Failed to create journal entry',
+            details: error.message
+        });
+    }
+};
+
+// Get all journal entries for the logged-in user
+const getUserJournalsController = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user || !user._id) {
+            return res.status(401).json({ error: 'Unauthorized. Please login.' });
+        }
+
+        const journals = await userService.getUserJournals(user._id);
+
+        res.status(200).json({
+            message: 'Journals fetched successfully',
+            journals,
+            count: journals.length
+        });
+    } catch (error) {
+        console.error('Error fetching journals:', error);
+        res.status(500).json({
+            error: 'Failed to fetch journals',
+            details: error.message
+        });
+    }
+};
+
+// Delete a specific journal entry
+const deleteJournalEntryController = async (req, res) => {
+    try {
+        const user = req.user;
+        if (!user || !user._id) {
+            return res.status(401).json({ error: 'Unauthorized. Please login.' });
+        }
+
+        const { journalId } = req.params;
+        if (!journalId) {
+            return res.status(400).json({ error: 'Journal ID is required' });
+        }
+
+        await userService.deleteJournalEntry(user._id, journalId);
+
+        res.status(200).json({
+            message: 'Journal entry deleted successfully'
+        });
+    } catch (error) {
+        console.error('Error deleting journal entry:', error);
+        res.status(500).json({
+            error: 'Failed to delete journal entry',
+            details: error.message
+        });
+    }
+};
+
+
+ module.exports = {
+    loginController,
+    signupController,
+    profileController,
+    logoutController,
+    getAllUserController,
+    getUserByIdController,
+    sendOtpController,
+    resetPasswordController,
+    createAssessmentController,
+    getUserAssessmentsController,
+    createJournalEntryController,
+    getUserJournalsController,
+    deleteJournalEntryController
 };

@@ -10,7 +10,10 @@ function SignUp() {
     email: '',
     phone: '',
     password: '',
+    age: '',
+    gender: '',
   });
+
   const [showPassword, setShowPassword] = useState(false);
   const { setUser } = useContext(UserContext);
   const messageRef = useRef(null);
@@ -39,7 +42,14 @@ function SignUp() {
         gsap.to(messageRef.current, { opacity: 1, duration: 0.2 });
       });
 
-    setFormData({ username: '', email: '', phone: '', password: '' });
+    setFormData({
+      username: '',
+      email: '',
+      phone: '',
+      password: '',
+      age: '',
+      gender: '',
+    });
   };
 
   return (
@@ -84,6 +94,32 @@ function SignUp() {
           required
         />
 
+        {/* AGE INPUT */}
+        <input
+          type="number"
+          name="age"
+          placeholder="Age"
+          value={formData.age}
+          onChange={handleChange}
+          className="p-3 rounded-lg bg-gray-800 text-white mb-4 focus:ring-2 focus:ring-blue-500 outline-none w-full"
+          required
+        />
+
+        {/* GENDER DROPDOWN */}
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          className="p-3 rounded-lg bg-gray-800 text-white mb-4 focus:ring-2 focus:ring-blue-500 outline-none w-full"
+          required
+        >
+          <option value="" disabled>Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+
+        {/* PASSWORD */}
         <div className="relative w-full">
           <input
             type={showPassword ? 'text' : 'password'}
@@ -95,7 +131,9 @@ function SignUp() {
             required
           />
           <i
-            className={`${showPassword ? 'ri-eye-off-fill' : 'ri-eye-fill'} absolute text-xl right-3 top-[40%] transform -translate-y-1/2 text-gray-400 cursor-pointer`}
+            className={`${
+              showPassword ? 'ri-eye-off-fill' : 'ri-eye-fill'
+            } absolute text-xl right-3 top-[40%] transform -translate-y-1/2 text-gray-400 cursor-pointer`}
             onClick={() => setShowPassword(!showPassword)}
           ></i>
         </div>

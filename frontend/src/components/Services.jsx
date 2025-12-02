@@ -6,6 +6,8 @@ import serviceImg3 from "../assets/service3.webp";
 import serviceImg4 from "../assets/service4.webp";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utilities/animationVarients";
+import { Link } from "react-router-dom";
+
 
 const Services = () => {
   return (
@@ -35,10 +37,10 @@ const Services = () => {
               viewport={{ once: false, amount: 0.7 }}
               className="flex flex-wrap justify-between items-center md:gap-8 gap-4"
             >
-              <Tab>Mental Health Assessment</Tab>
-              <Tab>Podcast & Book Recommendations</Tab>
-              <Tab>Meditation & Yoga Guidance</Tab>
-              <Tab>Expressive Journaling</Tab>
+              <Tab className=" cursor-pointer hover:underline underline-offset-2">Mental Health Assessment</Tab>
+              <Tab className=" cursor-pointer hover:underline underline-offset-2">Podcast & Book Recommendations</Tab>
+              <Tab className=" cursor-pointer hover:underline underline-offset-2">Meditation & Yoga Guidance</Tab>
+              <Tab className=" cursor-pointer hover:underline underline-offset-2">Expressive Journaling</Tab>
             </motion.TabList>
 
             <TabPanel>
@@ -56,6 +58,9 @@ const Services = () => {
                   <p className="mb-8">
                     Our quick mental health assessment helps you gain insights into your emotional well-being. Answer a few simple questions to receive a personalized report that can guide you toward the right support and resources.
                   </p>
+                  <Link className=" hover:underline text-primary text-sm hover:scale-125" to={'/assesment'}>
+                  Start Now
+                  </Link>
                 </motion.div>
                 <motion.div
                   variants={fadeIn("left", 0.2)}
@@ -148,6 +153,9 @@ const Services = () => {
                   <p className="mb-8">
                     Sometimes, writing down your thoughts can be the best therapy. Our journaling space lets you express your feelings freely without saving them, allowing you to release stress and gain clarity.
                   </p>
+                  <Link className=" hover:underline text-primary text-sm hover:scale-125" to={'/journel'}>
+                  Start Now
+                  </Link>
                 </motion.div>
                 <motion.div
                   variants={fadeIn("left", 0.2)}

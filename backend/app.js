@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: process.env.FRONTEND_URL || "https://soul-space-nu.vercel.app",
+  origin: process.env.FRONTEND_URL || "https://soul-space-nu.vercel.app" ,
   credentials: true
 }));
 app.use(cookie_parser())
@@ -33,7 +33,7 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 const io = new Server(server, {
   cors: {
-    origin: process.env.FRONTEND_URL || "https://soul-space-nu.vercel.app",
+    origin:process.env.FRONTEND_URL || "https://soul-space-nu.vercel.app",
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     if (socket.user && socket.sessionMessages && socket.sessionMessages.length > 0) {
       try {
         const analysisService = require("./service/analysis.service");
-        const UserIssue = require("./models/userIssue.model");
+        const UserIssue = require("./models/UserIssue.model");
         const userService = require('./service/user.service');
         
         const userdata = await userService.findUserByEmail(socket.user.email);
