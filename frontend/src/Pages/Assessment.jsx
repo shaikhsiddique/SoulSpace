@@ -1,9 +1,10 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useRef, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContext } from "../context/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../config/axios";
+import { IoVolumeHigh } from "react-icons/io5";
 
 
 const domainQuestions = [
@@ -107,8 +108,121 @@ function Assessment() {
   const [selectedDomain, setSelectedDomain] = useState(null);
   const [severityAnswers, setSeverityAnswers] = useState([null, null, null]);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const speechSynthesisRef = useRef(null);
+  const femaleVoiceRef = useRef(null);
 
   const totalDomainQuestions = domainQuestions.length;
+
+  // Initialize female voice for TTS
+  useEffect(() => {
+    const getFemaleVoice = () => {
+      const voices = window.speechSynthesis.getVoices();
+      const femaleVoiceNames = [
+        "Zira",
+        "Hazel",
+        "Samantha",
+        "Victoria",
+        "Karen",
+        "Fiona",
+        "Tessa",
+        "Google UK English Female",
+        "Microsoft Zira - English (United States)",
+        "Microsoft Hazel - English (Great Britain)",
+        "Google US English Female",
+      ];
+
+      let femaleVoice =
+        voices.find((voice) =>
+          femaleVoiceNames.some((name) =>
+            voice.name.toLowerCase().includes(name.toLowerCase())
+          )
+        ) || voices[0] || null;
+
+      femaleVoiceRef.current = femaleVoice;
+    };
+
+    if ("speechSynthesis" in window) {
+      if (window.speechSynthesis.getVoices().length > 0) {
+        getFemaleVoice();
+      } else {
+        window.speechSynthesis.onvoiceschanged = getFemaleVoice;
+      }
+    }
+
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
+  }, []);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (speechSynthesisRef.current) {
+        window.speechSynthesis.cancel();
+      }
+    };
+  }, []);
+
+  const handleSpeakQuestion = () => {
+    // Toggle: if already speaking, stop
+    if (isSpeaking && speechSynthesisRef.current) {
+      window.speechSynthesis.cancel();
+      speechSynthesisRef.current = null;
+      setIsSpeaking(false);
+      return;
+    }
+
+    if (!("speechSynthesis" in window)) {
+      toast.error("Your browser does not support text-to-speech.");
+      return;
+    }
+
+    let text = "";
+    if (stage === "domain") {
+      text = domainQuestions[currentIndex]?.question || "";
+    } else if (stage === "severity" && selectedDomain) {
+      text =
+        severityQuestions[selectedDomain]?.[currentIndex] ||
+        "";
+    }
+
+    if (!text) {
+      toast.error("No question to speak right now.");
+      return;
+    }
+
+    // stop any existing
+    if (speechSynthesisRef.current) {
+      window.speechSynthesis.cancel();
+      speechSynthesisRef.current = null;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    // soft, calm female tone
+    utterance.rate = 0.95;
+    utterance.pitch = 1.2;
+    utterance.volume = 0.9;
+
+    if (femaleVoiceRef.current) {
+      utterance.voice = femaleVoiceRef.current;
+    }
+
+    utterance.onend = () => {
+      setIsSpeaking(false);
+      speechSynthesisRef.current = null;
+    };
+
+    utterance.onerror = () => {
+      setIsSpeaking(false);
+      speechSynthesisRef.current = null;
+      toast.error("Failed to play the question.");
+    };
+
+    speechSynthesisRef.current = utterance;
+    setIsSpeaking(true);
+    window.speechSynthesis.speak(utterance);
+  };
 
   const handleStart = () => {
     setHasStarted(true);
@@ -291,9 +405,25 @@ function Assessment() {
           <p className="text-sm text-gray-500 mb-1">
             Question {currentIndex + 1} of {totalDomainQuestions}
           </p>
-          <h2 className="text-xl md:text-2xl font-semibold text-[#3B3B98] mb-4">
-            {q.question}
-          </h2>
+          <div className="flex items-start gap-3 mb-4">
+            <h2 className="text-xl md:text-2xl font-semibold text-[#3B3B98] flex-1">
+              {q.question}
+            </h2>
+            <button
+              type="button"
+              onClick={handleSpeakQuestion}
+              className={`p-2 rounded-full border text-sm flex items-center justify-center ${
+                isSpeaking
+                  ? "bg-emerald-500 text-white border-emerald-500"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+              }`}
+              title={
+                isSpeaking ? "Stop question audio" : "Play question audio"
+              }
+            >
+              <IoVolumeHigh />
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-4">
             {likertOptions.map((opt) => (
               <button
@@ -326,9 +456,25 @@ function Assessment() {
           <p className="text-sm text-gray-500 mb-1">
             Follow-up {currentIndex + 1} of {questions.length}
           </p>
-          <h2 className="text-xl md:text-2xl font-semibold text-[#3B3B98] mb-4">
-            {qText}
-          </h2>
+          <div className="flex items-start gap-3 mb-4">
+            <h2 className="text-xl md:text-2xl font-semibold text-[#3B3B98] flex-1">
+              {qText}
+            </h2>
+            <button
+              type="button"
+              onClick={handleSpeakQuestion}
+              className={`p-2 rounded-full border text-sm flex items-center justify-center ${
+                isSpeaking
+                  ? "bg-emerald-500 text-white border-emerald-500"
+                  : "bg-white text-gray-700 border-gray-300 hover:bg-gray-50"
+              }`}
+              title={
+                isSpeaking ? "Stop question audio" : "Play question audio"
+              }
+            >
+              <IoVolumeHigh />
+            </button>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-3 mb-4">
             {likertOptions.map((opt) => (
               <button

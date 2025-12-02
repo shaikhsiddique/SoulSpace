@@ -102,17 +102,28 @@ function Chatbot() {
   }, [chat]);
 
   const handleSpeak = () => {
+    // If already speaking, stop playback (toggle behavior)
+    if (isSpeaking && speechSynthesisRef.current) {
+      window.speechSynthesis.cancel();
+      speechSynthesisRef.current = null;
+      setIsSpeaking(false);
+      return;
+    }
+
     // Find the last bot message
-    const lastBotMessage = [...chat].reverse().find((msg) => msg.sender === "bot");
-    
+    const lastBotMessage = [...chat]
+      .reverse()
+      .find((msg) => msg.sender === "bot");
+
     if (!lastBotMessage || !lastBotMessage.text) {
       toast.error("No bot message to speak.");
       return;
     }
 
-    // Stop any ongoing speech
+    // Stop any ongoing speech just in case
     if (speechSynthesisRef.current) {
       window.speechSynthesis.cancel();
+      speechSynthesisRef.current = null;
     }
 
     // Check if browser supports speech synthesis
@@ -123,9 +134,10 @@ function Chatbot() {
 
     setIsSpeaking(true);
     const utterance = new SpeechSynthesisUtterance(lastBotMessage.text);
-    utterance.rate = 0.9;
-    utterance.pitch = 1.8;
-    utterance.volume = 1.0;
+    // slightly softer settings
+    utterance.rate = 0.95;
+    utterance.pitch = 1.2;
+    utterance.volume = 0.9;
     
     // Set female voice if available
     if (femaleVoiceRef.current) {
