@@ -4,6 +4,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoSend, IoVolumeHigh } from "react-icons/io5";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 
 function Chatbot() {
@@ -17,6 +18,7 @@ function Chatbot() {
   const speechSynthesisRef = useRef(null);
   const femaleVoiceRef = useRef(null);
   const token = localStorage.getItem("Auth-Token");
+  const navigate = useNavigate();
 
   // Initialize Socket.IO connection when component mounts
   useEffect(() => {
@@ -222,6 +224,8 @@ function Chatbot() {
     };
   }, []);
 
+
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#C6E2E9] to-[#F7F8FC] p-10">
       <motion.div
@@ -250,7 +254,7 @@ function Chatbot() {
             </span>
           </div>
         </div>
-
+        <p onClick={()=> {navigate('/')}} className=" cursor-pointer py-6"> ⬅️ Go Back</p>
         {/* Chat Container */}
         <div
           ref={chatContainerRef}

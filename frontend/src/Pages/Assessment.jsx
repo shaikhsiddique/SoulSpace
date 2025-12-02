@@ -363,7 +363,7 @@ function Assessment() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-[#C6E2E9] to-[#F7F8FC] px-4 py-10">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-xl p-6 md:p-8 ">
-        <p onClick={()=> {naviagte(-1)}} className=" cursor-pointer"> ⬅️ Go Back</p>
+        <p onClick={()=> {naviagte('/')}} className=" cursor-pointer"> ⬅️ Go Back</p>
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-12 mb-24 mt-2 ">
           <div>
             <h1 className="text-3xl font-bold text-[#3B3B98]">
