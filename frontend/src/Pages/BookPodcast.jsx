@@ -5,6 +5,7 @@ import { UserContext } from '../context/UserContext';
 import { gsap } from 'gsap';
 import PodcastCard from '../components/PoadCastCard';
 import BookCard from '../components/BookCard';
+import { useNavigate } from 'react-router-dom';
 
 
 function BookPodcast() {
@@ -14,6 +15,7 @@ function BookPodcast() {
   const contentRef = useRef(null);
   const cardsRef = useRef([]);
   const tabsRef = useRef(null);
+  const navigate = useNavigate();
   
   // Get all categories from booksData
   const allCategories = booksData.books;
@@ -147,9 +149,10 @@ function BookPodcast() {
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-[#C6E2E9] to-[#F7F8FC] px-4 py-6'>
-      <Navbar />
+      
       <div className='max-w-7xl mx-auto mt-40'>
         {/* Header Section */}
+        <p onClick={()=> {navigate(-1)}} className=" cursor-pointer"> ⬅️ Go Back</p>
         <div className='text-center mb-12'>
           <h1 className='text-4xl md:text-5xl font-bold text-gray-800 mb-4'>
             Mental Wellness Resources

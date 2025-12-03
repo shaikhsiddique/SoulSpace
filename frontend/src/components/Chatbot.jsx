@@ -241,7 +241,7 @@ function Chatbot() {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#C6E2E9] to-[#F7F8FC] p-10">
       <motion.div
-        className="w-full mx-24 bg-white shadow-xl rounded-xl p-6 flex flex-col"
+        className="w-[50vw] mx-24 bg-white shadow-xl rounded-xl p-6 flex flex-col"
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
