@@ -8,6 +8,8 @@ import Logout from '../Pages/Logout'
 import Assessment from '../Pages/Assessment'
 import Journel from '../Pages/Journel'
 import PastJournels from '../Pages/PastJournels'
+import ForgetPassword from '../Pages/ForgetPassword'
+import BookPodcast from '../Pages/BookPodcast'
 
 
 
@@ -17,11 +19,13 @@ function AppRoutes() {
   <Routes>
     <Route path="/" element={<UserAuth> <Home/> </UserAuth>} />
     <Route path='/journel' element={<UserAuth> <Journel/> </UserAuth>} />
+    <Route path='/book-podcast' element={<UserAuth> <BookPodcast/> </UserAuth>} />
     <Route path='/journels/history' element={<UserAuth> <PastJournels/> </UserAuth>} />
     <Route path="/assesment" element={<UserAuth> <Assessment/> </UserAuth>} />
     <Route path="/login" element={<Login/>} />
     <Route path="/SignUp" element={<Signup/>} />
     <Route path="/logout" element={<Logout/>} />
+    <Route path='/forget-password' element={<ForgetPassword/>}/>
     <Route path="/chatbot" element={<UserAuth><Chatbot/></UserAuth>} />
     
   </Routes>

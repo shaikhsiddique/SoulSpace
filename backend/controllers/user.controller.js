@@ -4,6 +4,8 @@ const  { hashPassword, comparePassword } = require('../utils/hash-password');
 const { createToken, verifyToken } = require('../utils/jwt');
 const userService = require('../service/user.service');
 const  redisClient  = require('../service/redis.service');
+const sendEmail = require('../utils/email');
+
 
 // Domain mapping for emotions
 const domainToEmotion = {
@@ -204,17 +206,15 @@ const getUserByIdController = async (req,res) => {
 
 const sendOtpController = async (req, res) => {
     try {
-        const { email, phone } = req.body;
+        const { email } = req.body;
         
-        if (!email && !phone) {
+        if (!email ) {
             return res.status(400).json({ error: 'Email or phone number is required' });
         }
 
         let user;
         if (email) {
             user = await userService.findUserByEmail(email);
-        } else {
-            user = await userModel.findOne({ phone });
         }
 
         if (!user) {
@@ -227,10 +227,7 @@ const sendOtpController = async (req, res) => {
         if (email) {
             const emailBody = `Your OTP for password reset is: ${otp}. This OTP will expire in 5 minutes.`;
             sendEmail(email, emailBody, 'Password Reset OTP');
-        } else if (phone) {
-            const message = `Your OTP for password reset is: ${otp}. This OTP will expire in 5 minutes.`;
-            await sendMessage(message, `+91${phone}`);
-        }
+        } 
 
         res.status(200).json({ 
             otp: otp,
@@ -256,7 +253,7 @@ const resetPasswordController = async (req, res) => {
 
         res.status(200).json({ message: 'Password reset successfully' });
     } catch (error) {
-        console.error(error);
+        console.error("reset password error",error);
         res.status(500).json({ error: 'Failed to reset password' });
     }
 };

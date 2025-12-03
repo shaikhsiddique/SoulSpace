@@ -93,6 +93,9 @@ const Services = () => {
                   <p className="mb-8">
                     Discover handpicked podcasts and books focused on mental health, personal growth, and mindfulness. These resources can provide guidance, comfort, and inspiration tailored to your needs.
                   </p>
+                  <Link to={'/book-podcast'} className="hover:underline text-primary text-sm hover:scale-125">
+                  see more
+                  </Link>
                 </motion.div>
                 <motion.div
                   variants={fadeIn("left", 0.2)}

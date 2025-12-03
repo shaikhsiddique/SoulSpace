@@ -1,0 +1,428 @@
+{
+    "books": [
+      {
+        "category_id": "C001",
+        "category_name": "Emotional Wellness",
+        "mapped_tags": [
+          "stress",
+          "anxiety",
+          "depression",
+          "selfEsteem",
+          "loneliness"
+        ],
+        "books": [
+          {
+            "book_id": "B001",
+            "title": "The Little Book of Mental Health",
+            "author": "Somerset NHS",
+            "summary": "A simple and friendly guide covering stress, anxiety, depression, self-esteem, and emotional grounding.",
+            "tags": ["stress", "anxiety", "depression", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764703310/1_mljvmp.jpg",
+            "pdf_link": "https://www.mcgill.ca/counselling/files/counselling/anxiety_moodjuice_self_help_guide.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B002",
+            "title": "Overcoming Depression: A Cognitive-Behavioral Approach",
+            "author": "National Institute of Mental Health (NIMH)",
+            "summary": "A CBT-based guide developed by mental-health professionals to help users reduce depression and negative thinking.",
+            "tags": ["depression", "stress", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764703308/2_skbilx.jpg",
+            "pdf_link": "https://www.adrian.edu/files/assets/overcomingdepressionworkbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B003",
+            "title": "Mindfulness-Based Cognitive Therapy (MBCT) Workbook",
+            "author": "Teasdale, Williams, Segal — Free Workbook Release",
+            "summary": "A practical workbook teaching mindfulness and CBT exercises for stress, anxiety, and depression.",
+            "tags": ["stress", "anxiety", "depression"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764703308/3_phgpsm.webp",
+            "pdf_link": "https://health.uark.edu/mental-health/resources/caps-resources-anxiety-depression-reduction-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B004",
+            "title": "Self-Esteem: A Proven Program of Cognitive Techniques",
+            "author": "McKay & Fanning — Public PDF Release",
+            "summary": "A workbook-style guide that improves self-esteem and emotional resilience using CBT techniques.",
+            "tags": ["selfEsteem", "loneliness", "depression"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764703309/4_cs9mds.jpg",
+            "pdf_link": "https://www.hpft.nhs.uk/media/1655/wellbeing-team-cbt-workshop-booklet-2016.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B005",
+            "title": "Coping With Loneliness",
+            "author": "U.S. Department of Health",
+            "summary": "A short and practical guide to understanding loneliness and applying healthy coping strategies.",
+            "tags": ["loneliness", "selfEsteem", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764703309/5_wexsws.jpg",
+            "pdf_link": "https://www.purdue.edu/recwell/pdf/wellness/manage-stress-workbook.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      },
+      {
+        "category_id": "C002",
+        "category_name": "Mind & Psychology",
+        "mapped_tags": ["stress", "anxiety", "depression", "anger", "selfEsteem"],
+        "books": [
+          {
+            "book_id": "B006",
+            "title": "Psychology (OpenStax, 2e)",
+            "author": "OpenStax",
+            "summary": "A comprehensive, peer-reviewed introductory psychology textbook covering cognition, emotion, development, personality, social behavior, and disorders.",
+            "tags": ["stress", "anxiety", "depression", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747487/1_ikjvhj.avif",
+            "pdf_link": "https://www.mcgill.ca/counselling/files/counselling/anxiety_moodjuice_self_help_guide.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B007",
+            "title": "A Textbook of Human Psychology",
+            "author": "H. J. Eysenck & D. F. Wilson",
+            "summary": "A classic, broad survey of human psychology topics — perception, learning, memory, emotion, personality and individual differences.",
+            "tags": ["selfEsteem", "anger", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747488/2_rijqxy.jpg",
+            "pdf_link": "https://mshoop.org/wp-lib/wp-content/uploads/2022/02/The-Anxiety-Skills-Workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B008",
+            "title": "Fundamentals of Psychological Disorders",
+            "author": "Washington State University Open Text",
+            "summary": "An open-text introduction to psychological disorders, symptoms, and basic approaches to treatment — useful for understanding clinical presentations.",
+            "tags": ["depression", "anxiety", "anger"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747487/3_esmcg9.webp",
+            "pdf_link": "https://health.uark.edu/mental-health/resources/caps-resources-anxiety-depression-reduction-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B009",
+            "title": "Positive Psychology: Theory, Research and Applications",
+            "author": "Ilona Boniwell & Susan Hefferon",
+            "summary": "An open-access text introducing positive psychology concepts — well-being, resilience, self-esteem, and evidence-based interventions to improve mental health.",
+            "tags": ["selfEsteem", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747490/4_ttlkoi.jpg",
+            "pdf_link": "https://www.mirecc.va.gov/VISN16/docs/calmer-life-self-help-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B010",
+            "title": "Social Psychology (open resources compilation)",
+            "author": "Various / Open Text",
+            "summary": "A collection of open-source chapters on social influence, attitudes, group behavior and interpersonal processes that impact stress, anger and self-worth.",
+            "tags": ["anger", "selfEsteem", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747487/5_kxhkca.webp",
+            "pdf_link": "https://www.mentalhealth.org.uk/sites/default/files/2022-07/MHF-How-to-overcome-fear-and-anxiety.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      },
+      {
+        "category_id": "C003",
+        "category_name": "Personal Growth & Life Transformation",
+        "mapped_tags": ["selfEsteem", "stress", "loneliness", "anxiety"],
+        "books": [
+          {
+            "book_id": "B011",
+            "title": "The Science of Well-Being",
+            "author": "Laurie R. Santos (Yale University)",
+            "summary": "A research-backed guide to improving happiness, building positive habits, reducing stress, and transforming daily life through mindset shifts.",
+            "tags": ["stress", "selfEsteem", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747765/1_yzketm.jpg",
+            "pdf_link": "https://www.adrian.edu/files/assets/overcomingdepressionworkbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B012",
+            "title": "Authentic Happiness Handbook",
+            "author": "Martin E. P. Seligman (Positive Psychology Center)",
+            "summary": "A practical introduction to positive psychology, teaching gratitude, purpose, strengths, and emotional flourishing.",
+            "tags": ["selfEsteem", "stress", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747765/2_pmjzmz.jpg",
+            "pdf_link": "https://health.uark.edu/mental-health/resources/caps-resources-anxiety-depression-reduction-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B013",
+            "title": "Building Self-Esteem: A Self-Help Guide",
+            "author": "Carol Vivyan (Counselling Resource)",
+            "summary": "A simple, powerful workbook based on CBT techniques for improving self-worth, reducing negative self-talk, and managing anxiety.",
+            "tags": ["selfEsteem", "anxiety", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747768/3_qwuocd.jpg",
+            "pdf_link": "https://www.stjohnscollegecardiff.com/userfiles/sjccmvc/Wellbeing/Regulating%20Emotions/Self-esteem%20and%20confidence%20self-help%20workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B014",
+            "title": "A Guide to Stress Management",
+            "author": "WHO / Public Health Resource",
+            "summary": "A clear and practical guide that teaches how to manage stress, build resilience, develop healthy habits, and restore mental energy.",
+            "tags": ["stress", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747766/4_i9ukyy.jpg",
+            "pdf_link": "https://www.mirecc.va.gov/VISN16/docs/calmer-life-self-help-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B015",
+            "title": "Improving Emotional Intelligence",
+            "author": "Mark Craemer (Open Education Resource)",
+            "summary": "A transformation-focused workbook that enhances emotional awareness, relationships, self-management, and resilience.",
+            "tags": ["selfEsteem", "loneliness", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747782/5_cg85qu.jpg",
+            "pdf_link": "https://www.camdenandislingtontalkingtherapies.nhs.uk/wp-content/uploads/2019/04/depression-and-low-mood-your-self-help-guide.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      },
+      {
+        "category_id": "C004",
+        "category_name": "Mindfulness & Calm",
+        "mapped_tags": ["stress", "anxiety", "sleep", "anger"],
+        "books": [
+          {
+            "book_id": "B016",
+            "title": "The Mindfulness Workbook",
+            "author": "New Harbinger Publications (Free Release Sample)",
+            "summary": "A practical workbook that teaches mindfulness, breathing techniques, and awareness practices to reduce stress and anxiety.",
+            "tags": ["stress", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747867/1_uvqtoz.webp",
+            "pdf_link": "https://www.iffht.com/wp-content/uploads/2024/02/mindfulness-based-stress-reduction.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B017",
+            "title": "Mindfulness for Beginners",
+            "author": "Tara Brach (Open Teaching Material)",
+            "summary": "A simple introduction to mindfulness practices that help with calming the mind, reducing emotional reactivity, and improving focus.",
+            "tags": ["stress", "anxiety", "anger"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747871/2_rweau9.jpg",
+            "pdf_link": "https://mindfulnessforliving.org/wp-content/uploads/2020/09/2020-MBSR-Participant-Workbook-Master-9-4-20-1.45pm.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B018",
+            "title": "Deep Sleep Meditation Guide",
+            "author": "MindWell Community Resources",
+            "summary": "A calming meditation-based guide designed to improve sleep quality, reduce night-time anxiety, and relax the mind.",
+            "tags": ["sleep", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747871/3_yzka8s.jpg",
+            "pdf_link": "https://www.purdue.edu/recwell/pdf/wellness/manage-stress-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B019",
+            "title": "Mindfulness-Based Stress Reduction (MBSR) Manual",
+            "author": "University of Massachusetts Center for Mindfulness",
+            "summary": "The original MBSR program manual focusing on meditation, awareness, and emotional regulation for stress relief.",
+            "tags": ["stress", "anger", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747869/4_rj7stu.webp",
+            "pdf_link": "https://www.dcu.ie/sites/default/files/students/mindfulness_based_stress_reduction_handbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B020",
+            "title": "Managing Anger with Mindfulness",
+            "author": "Centre for Clinical Interventions (CCI)",
+            "summary": "A workbook offering mindfulness strategies to manage irritation, anger bursts, emotional triggers, and reactive behavior.",
+            "tags": ["anger", "stress"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747874/5_a69tbx.jpg",
+            "pdf_link": "https://www.ruh.nhs.uk/patients/services/physiotherapy/documents/Mindfulness_leaflet.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      },
+      {
+        "category_id": "C005",
+        "category_name": "Healing & Recovery",
+        "mapped_tags": ["depression", "anger", "loneliness", "selfEsteem"],
+        "books": [
+          {
+            "book_id": "B021",
+            "title": "Recovery Workbook: Mental Health Self-Help Guide",
+            "author": "Pathways to Recovery Project (SAMHSA)",
+            "summary": "A powerful recovery workbook designed to help individuals rebuild identity, self-esteem, and emotional stability after depression or trauma.",
+            "tags": ["depression", "selfEsteem", "loneliness"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747962/1_rehsge.jpg",
+            "pdf_link": "https://www.adrian.edu/files/assets/overcomingdepressionworkbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B022",
+            "title": "Overcoming Anger: A Self-Help Guide",
+            "author": "Centre for Clinical Interventions (CCI)",
+            "summary": "A structured workbook that teaches anger recognition, emotional regulation, triggers, and coping techniques using CBT.",
+            "tags": ["anger", "depression"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747960/2_uoq2lc.webp",
+            "pdf_link": "https://health.uark.edu/mental-health/resources/caps-resources-anxiety-depression-reduction-workbook.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B023",
+            "title": "Depression: A Guide for Recovery",
+            "author": "Queensland Health",
+            "summary": "A clear and compassionate workbook helping users manage depressive episodes, challenge negative thinking, and rebuild emotional strength.",
+            "tags": ["depression", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747968/3_ygwl1a.webp",
+            "pdf_link": "https://www.cci.health.wa.gov.au/~/media/CCI/Consumer-Modules/Improving-Self-Esteem/Improving-Self-Esteem---06---Accepting-Yourself.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B024",
+            "title": "Loneliness & How to Cope",
+            "author": "Health Missouri (Public Health Dept.)",
+            "summary": "A practical guide explaining loneliness, its emotional effects, and step-by-step strategies to reconnect and heal.",
+            "tags": ["loneliness", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747968/4_mmyjda.jpg",
+            "pdf_link": "https://dn790006.ca.archive.org/0/items/TheSixPillarsOfSelfEsteem_201811/The-Six-Pillars-of-Self-Esteem.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B025",
+            "title": "Self-Esteem: A Proven Program of Cognitive Techniques",
+            "author": "McKay & Fanning (Open Release)",
+            "summary": "A complete self-esteem workbook offering CBT tools to rebuild confidence, identity, emotional resilience, and inner strength.",
+            "tags": ["selfEsteem", "depression", "anger"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764747962/5_gstrfc.avif",
+            "pdf_link": "https://www.cypsomersethealth.org/images/The_little_book_of_mental_health_-_version_6.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      },
+      {
+        "category_id": "C006",
+        "category_name": "Relationships & Communication",
+        "mapped_tags": ["loneliness", "anger", "anxiety", "selfEsteem"],
+        "books": [
+          {
+            "book_id": "B026",
+            "title": "Improving Communication Skills",
+            "author": "Open University",
+            "summary": "A practical guide to understanding communication styles, emotional expression, active listening, and healthier relationship patterns.",
+            "tags": ["anxiety", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764748281/1_lc1rl1.jpg",
+            "pdf_link": "https://scert.delhi.gov.in/sites/default/files/SCERT/publication%2021-22/publication%2022-23/improving_communication_skills_of_students.pdf"
+          },
+          {
+            "book_id": "B027",
+            "title": "Healthy Relationships Toolkit",
+            "author": "U.S. Department of Health",
+            "summary": "A friendly workbook teaching boundary-setting, emotional safety, conflict management, and supportive communication.",
+            "tags": ["loneliness", "anxiety", "selfEsteem"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764748280/2_uqabid.webp",
+            "pdf_link": "https://healthyrelationshipsinitiative.org/wp-content/uploads/2020/06/Healthy-Relationships-for-Teens-Toolkit-1.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B028",
+            "title": "Managing Emotions in Relationships",
+            "author": "Centre for Clinical Interventions (CCI)",
+            "summary": "A CBT-based guide to handling anger, emotional triggers, defensive communication, and relationship tension.",
+            "tags": ["anger", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764748281/3_v3pw2l.webp",
+            "pdf_link": "https://psychiatry.ucsf.edu/sites/psych.ucsf.edu/files/INTERPERSONAL%20EFFECTIVENESS%20SKILLS%20MANUAL%20e-version.pdf?utm_source=chatgpt.com"
+          },
+          {
+            "book_id": "B029",
+            "title": "Building Assertiveness Skills",
+            "author": "Therapist Aid (Open Resource)",
+            "summary": "A short, skill-based workbook that improves confidence, self-esteem, boundary-setting, and honest communication.",
+            "tags": ["selfEsteem", "anxiety"],
+            "cover_image": "https://res.cloudinary.com/daai6xwtd/image/upload/v1764748281/4_ngbgj5.webp",
+            "pdf_link": "https://www.algonquincollege.com/pembroke/files/2021/03/Assertiveness-Skills.pdf?utm_source=chatgpt.com"
+          }
+        ]
+      }
+    ],
+
+    
+
+
+
+  "podcasts": [
+    {
+      "id": "P001",
+      "title": "5-Minute Meditation You Can Do Anywhere",
+      "youtube_link": "https://www.youtube.com/watch?v=inpok4MKVLM",
+      "duration": "5:00",
+      "tags": ["stress", "anxiety"]
+    },
+    {
+      "id": "P002",
+      "title": "5-Minute Anxiety Relief Meditation",
+      "youtube_link": "https://www.youtube.com/watch?v=MIr3RsUWrdo",
+      "duration": "5:12",
+      "tags": ["anxiety", "stress"]
+    },
+    {
+      "id": "P003",
+      "title": "10-Minute Guided Meditation for Stress",
+      "youtube_link": "https://www.youtube.com/watch?v=ZToicYcHIOU",
+      "duration": "10:00",
+      "tags": ["stress", "sleep"]
+    },
+    {
+      "id": "P004",
+      "title": "Overcoming Overthinking",
+      "youtube_link": "https://www.youtube.com/watch?v=1-wP6X_l7E4",
+      "duration": "6:40",
+      "tags": ["anxiety", "stress"]
+    },
+    {
+      "id": "P005",
+      "title": "Boost Your Self-Esteem in 10 Minutes",
+      "youtube_link": "https://www.youtube.com/watch?v=2Jr-AdqS7Q0",
+      "duration": "10:48",
+      "tags": ["selfEsteem"]
+    },
+    {
+      "id": "P006",
+      "title": "How to Deal With Loneliness",
+      "youtube_link": "https://www.youtube.com/watch?v=92HCKD5yFQg",
+      "duration": "7:12",
+      "tags": ["loneliness", "selfEsteem"]
+    },
+    {
+      "id": "P007",
+      "title": "10-Minute Sleep Meditation",
+      "youtube_link": "https://www.youtube.com/watch?v=aEqlQvczMJQ",
+      "duration": "10:02",
+      "tags": ["sleep", "anxiety"]
+    },
+    {
+      "id": "P008",
+      "title": "Letting Go of Anger - Mindfulness Session",
+      "youtube_link": "https://www.youtube.com/watch?v=9zHq0JcWv1c",
+      "duration": "6:21",
+      "tags": ["anger", "stress"]
+    },
+    {
+      "id": "P009",
+      "title": "Feel Better in 15 Minutes - Guided Mood Reset",
+      "youtube_link": "https://www.youtube.com/watch?v=QfZrLJjbFjM",
+      "duration": "14:57",
+      "tags": ["depression", "anxiety", "stress"]
+    },
+    {
+      "id": "P010",
+      "title": "Quick Grounding Technique (5-4-3-2-1)",
+      "youtube_link": "https://www.youtube.com/watch?v=30VMIEmA114",
+      "duration": "6:00",
+      "tags": ["anxiety", "stress"]
+    },
+    {
+      "id": "P011",
+      "title": "Positive Affirmations for Self Love",
+      "youtube_link": "https://www.youtube.com/watch?v=uZ8D4UNR9bA",
+      "duration": "10:27",
+      "tags": ["selfEsteem"]
+    },
+    {
+      "id": "P012",
+      "title": "Calm Your Mind in 5 Minutes",
+      "youtube_link": "https://www.youtube.com/watch?v=O-6f5wQXSu8",
+      "duration": "5:01",
+      "tags": ["anxiety"]
+    },
+    {
+      "id": "P013",
+      "title": "7-Minute Anti-Anxiety Guided Relaxation",
+      "youtube_link": "https://www.youtube.com/watch?v=KQOAVZew5l8",
+      "duration": "7:04",
+      "tags": ["anxiety", "stress"]
+    },
+    {
+      "id": "P014",
+      "title": "Healing Depression - Short Talk",
+      "youtube_link": "https://www.youtube.com/watch?v=O7vMQa62h60",
+      "duration": "8:33",
+      "tags": ["depression"]
+    },
+    {
+      "id": "P015",
+      "title": "10-Minute Meditation for Anger Control",
+      "youtube_link": "https://www.youtube.com/watch?v=J1pTTpN6s2U",
+      "duration": "10:11",
+      "tags": ["anger", "stress"]
+    }
+  ]
+
+
+  }
+  
