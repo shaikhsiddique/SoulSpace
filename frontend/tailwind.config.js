@@ -3,8 +3,8 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-      backgroundImage:{
-        "workingImg":"url('/work-process.webp')"
+      backgroundImage: {
+        workingImg: "url('/work-process.webp')",
       },
       colors: {
         heroBg: "#0e1122",
@@ -15,7 +15,16 @@ export default {
         primary: ["Poppins", "sans-serif"],
         secondary: ["Syne", "sans-serif"],
       },
-    },
+      animation: {
+        monsterMove: "monsterMove 5s linear infinite",
+      },
+      keyframes: {
+        monsterMove: {
+          "0%": { left: "100vw" },
+          "100%": { left: "-10vw" },
+        },
+      },
+    }, // ← THIS was missing
   },
   plugins: [],
-};
+}

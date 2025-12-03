@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { motion } from "framer-motion";
+import 'remixicon/fonts/remixicon.css'
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
@@ -127,6 +128,13 @@ const Navbar = () => {
         <div className="hidden md:flex flex-grow justify-center">
           <nav>{navLinks}</nav>
         </div>
+
+        <a href="https://astounding-toffee-9d34bb.netlify.app/" className="py-2 mx-4">
+        
+        
+          <i className="ri-gamepad-line"></i>
+        
+      </a>
         {/* button */}
         <div className="hidden md:block">
           <a
@@ -163,10 +171,12 @@ const Navbar = () => {
       {/* mobile nav items */}
     {/* mobile nav items */}
 {isOpen && (
+    
   <nav className="absolute top-full left-0 w-full bg-heroBg z-20 md:hidden">
     <ul className="flex flex-col p-4 space-y-3">
       {navLinks.props.children}
       {/* mobile button */}
+     
       <li className="py-2">
         <a
           href="#contact"

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Hero from "../components/Hero";
 import About from "../components/About";
 import Services from "../components/Services";
@@ -8,33 +8,35 @@ import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 
-
-// ✅ Import UserContext
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 
-
+import gsap from "gsap";
 
 function Home() {
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
-  useEffect(()=>{
-    if(user.tests.length === 0){
-    naviagte('/assesment')
+ 
+  // Redirect user
+  useEffect(() => {
+    if (!user || !user.tests || user.tests.length === 0) {
+      navigate("/assesment");
     }
-  },[])
+  }, [user]);
+
 
   return (
     <div>
       <Navbar />
+
+     
       <Hero user={user} />
       <Services />
       <About />
       <WorkingStep />
       <Pricing />
-  
       <Contact />
       <Footer />
     </div>
